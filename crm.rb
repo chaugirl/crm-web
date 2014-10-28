@@ -1,4 +1,5 @@
 require_relative 'contact'
+require_relative 'rolodex'
 require 'sinatra'
 
 get '/' do  		# Welcome page always lives at '/'

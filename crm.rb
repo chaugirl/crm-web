@@ -11,7 +11,7 @@ get '/' do  		# Welcome page always lives at '/'
 end
 
 
-get "/contacts" do
+get '/contacts' do
 	# faking the data by entering a contacts array
 	# @contacts = []
 	# @contacts << Contact.new("Julie", "Hache", "julie@bitmakerlabs.com", "Instructor")
@@ -22,5 +22,13 @@ end
 
 get '/contacts/new' do
 	erb :new_contact
+end
+
+post '/contacts' do
+	new_contact = Contact.new(params[:first_name], params[:last_name], params[:email], params[:note])
+	$rolodex.add_contact(new_contact)
+	redirect to('/contacts')
+	#puts params #inspect the data submitted by form
+				#outputs a hash in the log output (terminal)
 end
 

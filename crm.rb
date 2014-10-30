@@ -34,8 +34,13 @@ post '/contacts' do
 				#outputs a hash in the log output (terminal)
 end
 
-get '/contacts/1000' do
-	@contact = $rolodex.find(1000)
-	erb :show_contact
+# get '/contacts/1000' do --> finding a contact with the id 1000
+get "/contacts/:id" do #making a generalized route so we don't have to create a single route for each individual contact
+	@contact = $rolodex.find(params[:id].to_i)
+	if @contact #if contact exists
+		erb :show_contact
+	else
+		raise Sinatra::NotFound
+	end
 end
 

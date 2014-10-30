@@ -1,8 +1,10 @@
+require 'sinatra'
 require_relative 'contact'
 require_relative 'rolodex'
-require 'sinatra'
 
 $rolodex = Rolodex.new
+#Fake data
+$rolodex.add_contact(Contact.new("Johnny", "Bravo", "johnny@bitmakerlabs.com", "Rockstar"))
 
 #routes
 get '/' do  		# Welcome page always lives at '/'
@@ -30,5 +32,10 @@ post '/contacts' do
 	redirect to('/contacts')
 	#puts params #inspect the data submitted by form
 				#outputs a hash in the log output (terminal)
+end
+
+get '/contacts/1000' do
+	@contact = $rolodex.find(1000)
+	erb :show_contact
 end
 

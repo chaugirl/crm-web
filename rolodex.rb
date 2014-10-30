@@ -6,10 +6,13 @@ class Rolodex
 					   # each Contact object is an element in the array
 	end
 
-	def add_contact(contact)
+	def add_contact(contact) #Adds a new contact
 		contact.id = @@index
 		@@index += 1
 		@contacts << contact
 	end
 
+	def find(contact_id) #Find a user by their ID
+	    @contacts.find {|contact| contact.id == contact_id }
+	end
 end

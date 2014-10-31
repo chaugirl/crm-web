@@ -23,12 +23,27 @@ class Contact
 	property :note, String
 end
 
+get "/contacts" do
+	@contacts = Contact.all # fetch all contacts in the table
+	erb :contacts
+end
+
+post "/contacts" do
+	contact = Contact.create(	#create method expects a hash where each key should be the name of the property
+		:first_name => params[:first_name],
+		:last_name => params[:last_name],
+		:email => params[:email],
+		:note => params[:note]
+	)
+	redirect to('contacts')
+end
+
 DataMapper.finalize # validates issues with properties or tables
 DataMapper.auto_upgrade! # takes care of effecting any changes to the underlying structure of the tables or columns
 
-$rolodex = Rolodex.new
-#Fake data
-$rolodex.add_contact(Contact.new("Johnny", "Bravo", "johnny@bitmakerlabs.com", "Rockstar"))
+# $rolodex = Rolodex.new
+# #Fake data
+# $rolodex.add_contact(Contact.new("Johnny", "Bravo", "johnny@bitmakerlabs.com", "Rockstar"))
 
 #routes
 get '/' do  		# Welcome page always lives at '/'

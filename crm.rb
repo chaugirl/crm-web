@@ -1,9 +1,30 @@
 require 'sinatra'
 require 'data_mapper'
-require_relative 'contact'
 require_relative 'rolodex'
 
 DataMapper.setup(:default, "sqlite3:database.sqlite3")
+
+class Contact
+	include DataMapper::Resource # in order to have access to all the special DataMapper methods that allow us to interface with the database
+
+	#attr_accessor :id, :first_name, :last_name, :email, :note # properties automatically set up getter and setter methods
+
+	# def initialize(first_name, last_name, email, note)
+	# 	@first_name = first_name
+	# 	@last_name = last_name
+	# 	@email = email
+	# 	@note = note
+	# end
+
+	property :id, Serial
+	property :first_name, String
+	property :last_name, String
+	property :email, String
+	property :note, String
+end
+
+DataMapper.finalize # validates issues with properties or tables
+DataMapper.auto_upgrade! # takes care of effecting any changes to the underlying structure of the tables or columns
 
 $rolodex = Rolodex.new
 #Fake data
